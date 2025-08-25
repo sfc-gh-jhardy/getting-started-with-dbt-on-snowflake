@@ -41,10 +41,15 @@ CREATE OR REPLACE EXTERNAL ACCESS INTEGRATION dbt_access_integration
 CREATE OR REPLACE FILE FORMAT tasty_bytes_dbt_db.public.csv_ff 
 type = 'csv';
 
+ALTER ACCOUNT SET REQUIRE_STORAGE_INTEGRATION_FOR_STAGE_CREATION = FALSE;
+ALTER ACCOUNT SET REQUIRE_STORAGE_INTEGRATION_FOR_STAGE_OPERATION = FALSE;
+
 CREATE OR REPLACE STAGE tasty_bytes_dbt_db.public.s3load
 COMMENT = 'Quickstarts S3 Stage Connection'
 url = 's3://sfquickstarts/frostbyte_tastybytes/'
 file_format = tasty_bytes_dbt_db.public.csv_ff;
+
+ALTER ACCOUNT SET REQUIRE_STORAGE_INTEGRATION_FOR_STAGE_CREATION = TRUE;
 
 /*--
  raw zone table build 
@@ -222,3 +227,5 @@ FROM @tasty_bytes_dbt_db.public.s3load/raw_pos/order_detail/;
 
 -- setup completion note
 SELECT 'tasty_bytes_dbt_db setup is now complete' AS note;
+
+ALTER ACCOUNT SET REQUIRE_STORAGE_INTEGRATION_FOR_STAGE_OPERATION = TRUE;
