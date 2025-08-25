@@ -1,3 +1,5 @@
+-- https://docs.snowflake.com/en/user-guide/tutorials/dbt-projects-on-snowflake-getting-started-tutorial#clean-up
+
 USE ROLE accountadmin;
 
 CREATE OR REPLACE WAREHOUSE tasty_bytes_dbt_wh
